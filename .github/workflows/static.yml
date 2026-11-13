@@ -1,107 +1,42 @@
 
-\<!DOCTYPE html>\
-\<html lang="es">\
-\<head>\
-\<meta charset="UTF-8">\
-\<meta name="viewport" content="width=device-width, initial-scale=1.0">\
-\<title>VortexR | Gaming Community\</title>\
-\<style>\
-\* { box-sizing: border-box; }\
-body {\
-&#x20; margin: 0;\
-&#x20; font-family: Arial, sans-serif;\
-&#x20; background: linear-gradient(135deg,#080817,#171044,#071b35);\
-&#x20; color: white;\
-&#x20; text-align: center;\
-}\
-header { padding: 65px 20px 35px; }\
-h1 {\
-&#x20; font-size: 58px;\
-&#x20; margin: 0;\
-&#x20; color: #8c7bff;\
-&#x20; text-shadow: 0 0 25px #654aff;\
-}\
-header p { color: #c7c4e8; font-size: 18px; }\
-main { max-width: 750px; margin: auto; padding: 20px; }\
-h2 { color: #a99aff; }\
-.description { line-height: 1.7; color: #d5d4e8; }\
-.links {\
-&#x20; display: grid;\
-&#x20; gap: 18px;\
-&#x20; margin: 35px 0;\
-}\
-.btn {\
-&#x20; display: block;\
-&#x20; padding: 19px;\
-&#x20; border-radius: 14px;\
-&#x20; text-decoration: none;\
-&#x20; color: white;\
-&#x20; font-size: 19px;\
-&#x20; font-weight: bold;\
-&#x20; background: linear-gradient(90deg,#5142c9,#247bd5);\
-&#x20; box-shadow: 0 0 18px #5142c966;\
-&#x20; transition: .2s;\
-}\
-.btn:hover { transform: scale(1.04); }\
-.discord { background: linear-gradient(90deg,#5865F2,#3946bd); }\
-.tiktok { background: linear-gradient(90deg,#e53175,#8d35b9); }\
-.roblox { background: linear-gradient(90deg,#30343d,#626b7a); }\
-footer {\
-&#x20; padding: 25px;\
-&#x20; margin-top: 40px;\
-&#x20; color: #aaa8c7;\
-&#x20; border-top: 1px solid #38305e;\
-}\
-\</style>\
-\</head>\
-\<body>\
-\
-\<header>\
-&#x20; \<h1>VORTEXR\</h1>\
-&#x20; \<p>GAMING COMMUNITY\</p>\
-\</header>\
-\
-\<main>\
-&#x20; \<h2>¡Bienvenido a VortexR!\</h2>\
-&#x20; \<p class="description">\
-&#x20;   ¡Hola! Soy VortexR, creador de contenido de Roblox.\
-&#x20;   Aquí encontrarás mis redes sociales, mi perfil de Roblox\
-&#x20;   y mi comunidad de Discord.\
-&#x20;   ¡Únete y forma parte de la aventura!\
-&#x20; \</p>\
-\
-&#x20; \<div class="links">\
-&#x20;   \<a class="btn roblox"\
-&#x20;      href="https\://www\.roblox.com/search/users?keyword=Elogetta77369"\
-&#x20;      target="\_blank" rel="noopener">\
-&#x20;      🎮 AGREGAR EN ROBLOX\
-&#x20;   \</a>\
-\
-&#x20;   \<a class="btn tiktok"\
-&#x20;      href="https\://www\.tiktok.com/@vortexr12"\
-&#x20;      target="\_blank" rel="noopener">\
-&#x20;      🎵 SEGUIR EN TIKTOK\
-&#x20;   \</a>\
-\
-&#x20;   \<a class="btn discord"\
-&#x20;      href="https\://discord.gg/cZ4bzWXzc"\
-&#x20;      target="\_blank" rel="noopener">\
-&#x20;      💬 UNIRSE A DISCORD\
-&#x20;   \</a>\
-&#x20; \</div>\
-\
-&#x20; \<h2>¡Forma parte de la comunidad!\</h2>\
-&#x20; \<p class="description">\
-&#x20;   Comparte ideas, habla de Roblox y disfruta\
-&#x20;   con otros miembros de VortexR Community.\
-&#x20; \</p>\
-\</main>\
-\
-\<footer>\
-&#x20; © 2026 VortexR Community | Todos los derechos reservados\
-\</footer>\
-\
-\</body>\
-\</html>\
+
+name: Deploy VortexR website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
 
 
